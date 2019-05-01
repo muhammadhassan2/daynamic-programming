@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std ;
+string s ; int n ;
+typedef long long ll;
+ll dp[1006][1006] ;
+ll cn(int i,int j)
+{
+    if(i>=j) return 0;
+   ll &ret=dp[i][j];
+   if(ret!=-1)return ret;
+   if(s[i]==s[j])
+    return cn(i+1,j-1);
+         int ans=0;
+         int c1=cn(i+1,j-1)+1;
+         int c2=cn(i+1,j)+1;
+         int c3=cn(i,j-1)+1;
+         return ret=min({c1,c2,c3});
+}
+int main () {
+    int T,c=0;
+    cin>>T;
+  while(T--){
+ cin>>s;
+ memset(dp,-1,sizeof dp);
+ ll an=cn(0,s.size()-1);
+ //printf("Case %d: %d\n", ++c,an );
+ cout<<"Case "<<++c<<": "<<an<<endl;
+
+    }
+    return 0 ;
+}
