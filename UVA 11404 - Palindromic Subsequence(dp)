@@ -1,0 +1,52 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <string>
+#include <iostream>
+using namespace std;
+ 
+const int N = 1005;
+ 
+struct State {
+	int value;
+	string str;
+	bool operator > (State &a) {
+		if (value != a.value)
+			return value > a.value;
+		return str < a.str;
+	}
+} dp[N][N];
+ 
+int n;
+char s[N];
+ 
+int main() {
+	while (~scanf("%s", s + 1)) {
+		n = strlen(s + 1);
+		for (int i = n; i >= 1; i--)
+			for (int j = i; j <= n; j++) {
+				if (s[i] == s[j]) {
+					if (i == j) {
+						dp[i][j].value = 1;
+						dp[i][j].str = s[i];
+					}
+					else {
+						dp[i][j].value = dp[i + 1][j - 1].value + 2;
+						dp[i][j].str = s[i] + dp[i + 1][j - 1].str + s[j];
+					}
+				}
+				else {
+					if (dp[i + 1][j] > dp[i][j - 1]) {
+						dp[i][j].value = dp[i + 1][j].value;
+						dp[i][j].str = dp[i + 1][j].str;
+					}
+					else {
+						dp[i][j].value = dp[i][j - 1].value;
+						dp[i][j].str = dp[i][j - 1].str;
+					}
+				}
+			}
+		cout << dp[1][n].str << endl;
+	}
+	return 0;
+}
