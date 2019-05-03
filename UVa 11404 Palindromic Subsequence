@@ -1,0 +1,60 @@
+ #include <bits/stdc++.h>
+ using namespace std;
+ #define FOR(i,s,t) for(int (i)=(s);(i)<(t);(i)++)
+ const int maxn = 1000+1;
+ int n;
+ int dp[maxn][maxn];
+ int p[maxn][maxn];
+ string s;
+  int nu(int i,int j)
+  {
+      if(i==j)return 1;
+      else if(i>j)return 0;
+      if(dp[i][j]!=-1)return dp[i][j];
+      if(s[i]==s[j])
+      {
+         return nu(i+1,j-1)+2;
+      }
+     else return dp[i][j]=max(nu(i,j-1),nu(i+1,j));
+  }
+  void pr(int i,int j)
+  {
+      if(i==j){cout<<s[i];return;}
+      if(i>j)return;
+      if(s[i]==s[j])
+      {
+          cout<<s[i];
+          pr(i+1,j-1);
+          cout<<s[j];
+          return;
+      }
+      else
+      {
+          if(nu(i+1,j)>nu(i,j-1)){
+            pr(i+1,j);
+            return ;
+          }
+          else if(nu(i+1,j)<nu(i,j-1)){
+          pr(i,j-1);
+          return;
+          }
+
+          else if(nu(i+1,j)==nu(i,j-1))
+          {
+              if(s[i]<s[j]){pr(i,j-1);return;}
+              else{ pr(i+1,j);return ;}
+          }
+
+      }
+  }
+ int main()
+ {
+   while(cin >> s)
+   {
+     memset(dp, -1, sizeof dp);
+     memset(p,0,sizeof p);
+     pr(0,s.size()-1);
+     cout << endl;
+   }
+   return 0;
+ }
