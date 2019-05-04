@@ -1,0 +1,47 @@
+ #include <bits/stdc++.h>
+ using namespace std;
+ #define FOR(i,s,t) for(int (i)=(s);(i)<(t);(i)++)
+ const int maxn = 1000+1;
+ int n;
+ int dp[maxn][maxn];
+ int p[maxn][maxn];
+ string s,ss;
+ int nu(int i,int j)
+ {
+     if(i>=s.size()||j>=ss.size())return 0;
+     if(dp[i][j]!=-1)return dp[i][j];
+     if(s[i]==ss[j])
+     {
+         return nu(i+1,j+1)+1;
+     }
+      return dp[i][j]=max(nu(i+1,j),nu(i,j+1));
+ }
+ void print (int i,int j)
+ {
+     if(i>=s.size()||j>=ss.size())return ;
+     if(s[i]==ss[j])
+     {
+         cout<<s[i];
+         print(i+1,j+1);
+         return ;
+     //    return ;
+     }
+     if(nu(i+1,j)>=nu(i,j+1))
+     {
+         print(i+1,j);
+         return;
+     }
+     else
+     {
+         print(i,j+1);
+         return ;
+     }
+ }
+ int main()
+ {
+   cin>>s>>ss;
+   memset(dp,-1,sizeof dp);
+   cout<<nu(0,0)<<endl;
+   print(0,0);
+   return 0;
+ }
