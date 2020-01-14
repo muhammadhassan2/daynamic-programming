@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n,m,ans;
+int x[6],y[6];
+int fi(int idx,int pre,int s)
+{
+    if(idx==n)
+    {
+        if(s<=m)return 0;
+        else return -10000;
+    }
+    int c1=fi(idx+1,pre,s);
+    int c2=fi(idx+1,idx,s+x[idx])+y[idx];
+    ans=max(c1,c2);
+    return ans;
+}
+int main() {
+cin>>n>>m;
+for(int i=0;i<n;i++)cin>>x[i];
+for(int j=0;j<n;j++)cin>>y[j];
+cout<<fi(0,0,0);
+/*
+for(int i=0;i<(1<<n);i++)
+{
+    int s=0,t=0;
+  for(int j=0;j<n;j++)
+  {
+      if(i&(1<<j))s+=x[j],t+=y[j];
+  }
+  if(s>m)continue;
+  else ans=max(ans,t);
+}
+cout<<ans;
+*/
+
+}
